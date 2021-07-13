@@ -9,12 +9,12 @@ import {
   requestBody,
   httpPut,
   httpDelete,
-  BaseHttpController
+  BaseHttpController,
 } from "inversify-express-utils";
 import { BudgetItem } from "../models/budget_item";
 import { TYPES } from "../constants/types";
 import { container } from "../container";
-import { BudgetItemService } from '../services/budget_item_service';
+import { BudgetItemService } from "../services/budget_item_service";
 
 @controller("/budget-item")
 export class BudgetItemController extends BaseHttpController {
@@ -46,9 +46,7 @@ export class BudgetItemController extends BaseHttpController {
       res.send(e.message);
     }
   }
-  @httpPost("/", 
-  container.get<RequestHandler>(TYPES.BudgetItemValidation)
-  )
+  @httpPost("/", container.get<RequestHandler>(TYPES.BudgetItemValidation))
   public async addBudgetItem(
     @response() res: Response,
     @requestBody() newBudgetItem: BudgetItem
@@ -61,40 +59,42 @@ export class BudgetItemController extends BaseHttpController {
     }
   }
 
-  @httpPost("/",
-  container.get<RequestHandler>(TYPES.BudgetItemsValidation))
-  public async addBudgetItems(@response() res: Response,
-  @requestBody() newBudgetItems: BudgetItem[]) : Promise<BudgetItem[]> {
+  @httpPost("/", container.get<RequestHandler>(TYPES.BudgetItemsValidation))
+  public async addBudgetItems(
+    @response() res: Response,
+    @requestBody() newBudgetItems: BudgetItem[]
+  ): Promise<BudgetItem[]> {
     try {
       return await this.BudgetItemService.saveBudgetItems(newBudgetItems);
-    } catch(e) {
+    } catch (e) {
       res.status(500);
       res.send(e.message);
     }
   }
 
-  @httpPut("/",
-  container.get<RequestHandler>(TYPES.BudgetItemValidation))
-  public async updateBudgetItem(@response() res: Response,
-  @requestBody() updatedItem: BudgetItem) : Promise<BudgetItem> {
+  @httpPut("/", container.get<RequestHandler>(TYPES.BudgetItemValidation))
+  public async updateBudgetItem(
+    @response() res: Response,
+    @requestBody() updatedItem: BudgetItem
+  ): Promise<BudgetItem> {
     try {
       return await this.BudgetItemService.updateBudgetItem(updatedItem);
-    } catch(e) {
+    } catch (e) {
       res.status(500);
       res.send(e.message);
     }
   }
 
   @httpDelete("/:id")
-  public async deleteBudgetItemById(@response() res: Response,@requestParam("id") id: string) {
+  public async deleteBudgetItemById(
+    @response() res: Response,
+    @requestParam("id") id: string
+  ) {
     try {
       return await this.BudgetItemService.deleteBudgetItemById(id);
-    } catch(e) {
+    } catch (e) {
       res.status(500);
       res.send(e.message);
     }
   }
-  
-
-
 }

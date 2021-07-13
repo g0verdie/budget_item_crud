@@ -19,7 +19,7 @@ export class BudgetItem extends BaseEntity {
   public title: string;
 
   @Column({
-      type: "datetime"
+    type: "datetime",
   })
   public fulfillmentDate: Date;
 
@@ -37,14 +37,14 @@ export class BudgetItem extends BaseEntity {
   public requestor: string;
 
   @Column({
-    type: "datetime"
-})
+    type: "datetime",
+  })
   @CreateDateColumn()
   createdDate: Date;
 
   @Column({
-    type: "datetime"
-})
+    type: "datetime",
+  })
   @UpdateDateColumn()
   updatedDate: Date;
 
@@ -55,7 +55,7 @@ export class BudgetItem extends BaseEntity {
   static addItems(budgetItems: BudgetItem[]) {
     return this.save(budgetItems);
   }
-  static findById(id: string) : Promise<BudgetItem> {
+  static findById(id: string): Promise<BudgetItem> {
     return this.findById(id);
   }
 
