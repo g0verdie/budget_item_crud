@@ -1,0 +1,1 @@
+export type Resolution = 'CREATED' | 'REVIEW' | 'WORK_IN_PROGRESS' | 'FULFILLED';

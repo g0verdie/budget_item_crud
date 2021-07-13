@@ -6,9 +6,11 @@ import * as bodyParser from 'body-parser';
 import helmet from 'helmet';
 import { getDbConnection } from "./db";
 import { container } from './container';
-
 import './controllers/controller_loader';
-import './middleware/middleware_loader';
+
+//import './middleware/middleware_loader';
+import { budgetItemValidation } from './middleware/budget_item_validation_middleware';
+import { TYPES } from './constants/types';
 
 (async () => {
     const port = 3000;
@@ -18,6 +20,7 @@ import './middleware/middleware_loader';
     let server = new InversifyExpressServer(container);
 
     container.bind<express.RequestHandler>('Morgan').toConstantValue(morgan('combined'));
+    container.bind<express.RequestHandler>(TYPES.BudgetItemValidation).toConstantValue(budgetItemValidation);
 
     server.setConfig((app) => {
         app.use(bodyParser.urlencoded({

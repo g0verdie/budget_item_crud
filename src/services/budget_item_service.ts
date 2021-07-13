@@ -5,6 +5,7 @@ import { inject } from "inversify";
 import { Repository } from "typeorm";
 import { BudgetItemRepository } from "../repositories/budget_item_repository";
 
+
 @provide(TYPES.BudgetItemService)
 export class BudgetItemService {
   public constructor(
@@ -13,6 +14,12 @@ export class BudgetItemService {
   ) {}
 
   public async getAllBudgetItems() {
-    return this.BudgetItemRepository.getBudgetItems();
+    //return this.BudgetItemRepository.getBudgetItems();
+    return BudgetItem.find();
   }
+  
+  public async getBudgetItemByTitle(title: string) : Promise<BudgetItem> {
+    return BudgetItem.findOne({title});
+  }
+  
 }

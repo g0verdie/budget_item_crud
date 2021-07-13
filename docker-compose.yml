@@ -1,0 +1,35 @@
+version: '3.9'
+
+services: 
+  testdb:
+    image: mysql
+    restart: always
+    env_file: ./.env
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+    ports:
+      - $MYSQL_LOCAL_PORT:$MYSQL_DOCKER_PORT
+    volumes: 
+      - db-config:/etc/mysql
+      - db-data:/var/lib/mysql
+      - ./db/backup/files/:/data_backup/data
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: node-mysql-app
+    env_file: ./.env
+    ports:
+      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+    volumes: 
+      - ./app:/src
+      - /node_modules
+    depends_on:
+      - testdb
+    stdin_open: true
+    tty: true
+
+volumes: 
+  db-config:
+  db-data:

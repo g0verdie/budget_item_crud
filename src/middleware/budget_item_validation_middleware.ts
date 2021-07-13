@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { container } from '../container';
 import {RequestHandler, Request, Response, NextFunction } from 'express';
 import Joi from 'joi';
+import { inject, injectable, tagged } from 'inversify'
 
 const schema = Joi.object().keys({
     id: Joi.string().uuid(),
@@ -11,9 +12,9 @@ const schema = Joi.object().keys({
 function budgetItemValidation(req: Request, res: Response, next: NextFunction) {
     const result = schema.validate(req.body);
     if(result.error) {
-        res.status(500).send();
+        res.status(400).json({message: 'Invalid Budget Item'}).send();
     }
     next();
 };
 
-container.bind<RequestHandler>('BudgetItemValidation').toConstantValue(budgetItemValidation);
+export { budgetItemValidation };
