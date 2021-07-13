@@ -21,9 +21,6 @@ FROM gcr.io/distroless/nodejs:14
 COPY --from=base ./node_modules ./node_modules
 COPY --from=base /dist /dist
 
-# Copy static files
-COPY src/public dist/src/public
-
 # Expose port 3000
 EXPOSE 3000
 
