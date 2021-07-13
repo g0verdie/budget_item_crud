@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { container } from '../container';
-import * as express from 'express';
+import {RequestHandler } from 'express';
 
 
 function logger(req: any, res: any, next: any) {
@@ -9,4 +9,4 @@ function logger(req: any, res: any, next: any) {
     next();
 };
 
-container.bind<express.RequestHandler>('LoggerMiddleware').toConstantValue(logger);
+container.bind<RequestHandler>('LoggerMiddleware').toConstantValue(logger);

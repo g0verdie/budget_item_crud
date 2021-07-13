@@ -43,7 +43,9 @@ export class BudgetItemController {
       res.send(e.message);
     }
   }
-  @httpPost("/", container.get<RequestHandler>(TYPES.BudgetItemValidation))
+  @httpPost("/", 
+  container.get<RequestHandler>(TYPES.BudgetItemValidation)
+  )
   public async post(
     @response() res: Response,
     @requestBody() newBudgetItem: BudgetItem

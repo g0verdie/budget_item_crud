@@ -2,7 +2,8 @@ import 'reflect-metadata';
 import { container } from '../container';
 import {RequestHandler, Request, Response, NextFunction } from 'express';
 import Joi from 'joi';
-import { inject, injectable, tagged } from 'inversify'
+import { TYPES } from '../constants/types';
+
 
 const schema = Joi.object().keys({
     id: Joi.string().uuid(),
@@ -17,4 +18,4 @@ function budgetItemValidation(req: Request, res: Response, next: NextFunction) {
     next();
 };
 
-export { budgetItemValidation };
+container.bind<RequestHandler>(TYPES.BudgetItemValidation).toConstantValue(budgetItemValidation);

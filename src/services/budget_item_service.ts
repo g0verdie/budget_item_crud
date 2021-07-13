@@ -3,15 +3,11 @@ import { TYPES } from "../constants/types";
 import { BudgetItem } from "../models/budget_item";
 import { inject } from "inversify";
 import { Repository } from "typeorm";
-import { BudgetItemRepository } from "../repositories/budget_item_repository";
 
 
 @provide(TYPES.BudgetItemService)
 export class BudgetItemService {
-  public constructor(
-    @inject(TYPES.BudgetItemRepository)
-    private BudgetItemRepository: BudgetItemRepository
-  ) {}
+  public constructor() {}
 
   public async getAllBudgetItems() {
     //return this.BudgetItemRepository.getBudgetItems();
@@ -19,7 +15,19 @@ export class BudgetItemService {
   }
   
   public async getBudgetItemByTitle(title: string) : Promise<BudgetItem> {
-    return BudgetItem.findOne({title});
+    return BudgetItem.findByTitle(title);
+  }
+
+  public async getBudgetItemById(id: string) : Promise<BudgetItem> {
+    return BudgetItem.findOne(id);
+  }
+
+  public async getBudgetItemsByRequestor(requestor: string) : Promise<BudgetItem[]> {
+    return BudgetItem.findByRequestor(requestor);
+  }
+
+  public async getBudgetItemsCreatedAfter(date: string) : Promise<BudgetItem[]> {
+    return BudgetItem.findAllPastCreationDate(date);
   }
   
 }

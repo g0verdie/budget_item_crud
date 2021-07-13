@@ -1,15 +1,15 @@
 import "reflect-metadata";
-import * as express from 'express';
+import {RequestHandler} from 'express';
 import morgan from 'morgan';
 import { InversifyExpressServer } from "inversify-express-utils";
 import * as bodyParser from 'body-parser';
 import helmet from 'helmet';
 import { getDbConnection } from "./db";
 import { container } from './container';
+import './middleware/middleware_loader';
 import './controllers/controller_loader';
 
-//import './middleware/middleware_loader';
-import { budgetItemValidation } from './middleware/budget_item_validation_middleware';
+//import { budgetItemValidation } from './middleware/budget_item_validation_middleware';
 import { TYPES } from './constants/types';
 
 (async () => {
@@ -19,8 +19,8 @@ import { TYPES } from './constants/types';
     
     let server = new InversifyExpressServer(container);
 
-    container.bind<express.RequestHandler>('Morgan').toConstantValue(morgan('combined'));
-    container.bind<express.RequestHandler>(TYPES.BudgetItemValidation).toConstantValue(budgetItemValidation);
+    container.bind<RequestHandler>('Morgan').toConstantValue(morgan('combined'));
+    //container.bind<RequestHandler>(TYPES.BudgetItemValidation).toConstantValue(budgetItemValidation);
 
     server.setConfig((app) => {
         app.use(bodyParser.urlencoded({
