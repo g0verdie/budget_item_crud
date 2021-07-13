@@ -1,7 +1,7 @@
 FROM node:14.17.1 as base
 
 # Add package file
-COPY package*.json ./
+COPY package.json ./
 
 # Install deps
 RUN npm i
@@ -9,7 +9,7 @@ RUN npm i
 # Copy source
 COPY src ./src
 COPY tsconfig.json ./tsconfig.json
-COPY openapi.json ./openapi.json
+#COPY openapi.json ./openapi.json
 
 # Build dist
 RUN npm run build

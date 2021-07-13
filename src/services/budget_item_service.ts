@@ -1,8 +1,6 @@
 import { provide } from "inversify-binding-decorators";
 import { TYPES } from "../constants/types";
 import { BudgetItem } from "../models/budget_item";
-import { inject } from "inversify";
-import { Repository } from "typeorm";
 
 
 @provide(TYPES.BudgetItemService)
@@ -10,7 +8,6 @@ export class BudgetItemService {
   public constructor() {}
 
   public async getAllBudgetItems() {
-    //return this.BudgetItemRepository.getBudgetItems();
     return BudgetItem.find();
   }
   
@@ -26,8 +23,16 @@ export class BudgetItemService {
     return BudgetItem.findByRequestor(requestor);
   }
 
-  public async getBudgetItemsCreatedAfter(date: string) : Promise<BudgetItem[]> {
+  public async getBudgetItemsCreatedAfter(date: Date) : Promise<BudgetItem[]> {
     return BudgetItem.findAllPastCreationDate(date);
+  }
+
+  public async saveBudgetItem(newItem : BudgetItem) : Promise<BudgetItem> {
+    return BudgetItem.save(newItem);
+  }
+
+  public async saveBudgetItems(newItems: BudgetItem[]) : Promise<BudgetItem[]> {
+    return BudgetItem.save(newItems);
   }
   
 }

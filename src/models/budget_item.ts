@@ -18,7 +18,9 @@ export class BudgetItem extends BaseEntity {
   })
   public title: string;
 
-  @Column()
+  @Column({
+      type: "datetime"
+  })
   public fulfillmentDate: Date;
 
   @Column({
@@ -34,11 +36,15 @@ export class BudgetItem extends BaseEntity {
   @Column()
   public requestor: string;
 
-  @Column()
+  @Column({
+    type: "datetime"
+})
   @CreateDateColumn()
   createdDate: Date;
 
-  @Column()
+  @Column({
+    type: "datetime"
+})
   @UpdateDateColumn()
   updatedDate: Date;
 

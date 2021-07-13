@@ -6,21 +6,21 @@ import * as bodyParser from 'body-parser';
 import helmet from 'helmet';
 import { getDbConnection } from "./db";
 import { container } from './container';
+
+// middleware has to be loaded prior to controllers due to the way bindings operate
 import './middleware/middleware_loader';
 import './controllers/controller_loader';
 
-//import { budgetItemValidation } from './middleware/budget_item_validation_middleware';
-import { TYPES } from './constants/types';
 
 (async () => {
+    const base = "crud-api";
     const port = 3000;
     await getDbConnection();
 
     
-    let server = new InversifyExpressServer(container);
+    let server = new InversifyExpressServer(container, null, { rootPath: `*${base}` });
 
     container.bind<RequestHandler>('Morgan').toConstantValue(morgan('combined'));
-    //container.bind<RequestHandler>(TYPES.BudgetItemValidation).toConstantValue(budgetItemValidation);
 
     server.setConfig((app) => {
         app.use(bodyParser.urlencoded({
