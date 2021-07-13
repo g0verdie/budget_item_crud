@@ -9,13 +9,12 @@ RUN npm i
 # Copy source
 COPY src ./src
 COPY tsconfig.json ./tsconfig.json
-#COPY openapi.json ./openapi.json
 
 # Build dist
 RUN npm run build
 
 # Start production image build
-FROM gcr.io/distroless/nodejs:14
+FROM nodejs:14
 
 # Copy node modules and build directory
 COPY --from=base ./node_modules ./node_modules
