@@ -26,7 +26,7 @@ export class BudgetItemController extends BaseHttpController {
   }
 
   @httpGet("/")
-  public async get(@response() res: Response) {
+  public async getBudgetItems(@response() res: Response) {
     try {
       return await this.BudgetItemService.getAllBudgetItems();
     } catch (e) {
@@ -35,7 +35,7 @@ export class BudgetItemController extends BaseHttpController {
     }
   }
   @httpGet("/requestor/:requestor")
-  public async getByRequestor(
+  public async getBudgetItemsByRequestor(
     @response() res: Response,
     @requestParam("requestor") requestor: string
   ) {
