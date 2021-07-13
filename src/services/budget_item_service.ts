@@ -39,7 +39,7 @@ export class BudgetItemService {
     return updatedItem.save();
   }
 
-  public async deleteBudgetItemById(id: string) {
+  public async deleteBudgetItemById(id: string) : Promise<any> {
     return BudgetItem.delete(id);
   }
   
