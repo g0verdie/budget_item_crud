@@ -9,6 +9,7 @@ import {
   requestBody,
   httpPut,
   httpDelete,
+  BaseHttpController
 } from "inversify-express-utils";
 import { BudgetItem } from "../models/budget_item";
 import { TYPES } from "../constants/types";
@@ -16,11 +17,13 @@ import { container } from "../container";
 import { BudgetItemService } from '../services/budget_item_service';
 
 @controller("/budget-item")
-export class BudgetItemController {
+export class BudgetItemController extends BaseHttpController {
   public constructor(
     @inject(TYPES.BudgetItemService)
     private BudgetItemService: BudgetItemService
-  ) {}
+  ) {
+    super();
+  }
 
   @httpGet("/")
   public async get(@response() res: Response) {
