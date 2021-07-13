@@ -15,8 +15,7 @@ import './controllers/controller_loader';
 (async () => {
     const base = "crud-api";
     const port = 3000;
-    await getDbConnection();
-
+    const connection = await getDbConnection();
     
     let server = new InversifyExpressServer(container, null, { rootPath: `*${base}` });
 
