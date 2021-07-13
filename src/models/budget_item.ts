@@ -6,7 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { ResolutionTypes } from "../constants/budgetItemConsts";
+import { ResolutionTypes } from "../constants/budget_item_consts";
 
 @Entity()
 export class BudgetItem extends BaseEntity {
