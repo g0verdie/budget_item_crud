@@ -34,5 +34,13 @@ export class BudgetItemService {
   public async saveBudgetItems(newItems: BudgetItem[]) : Promise<BudgetItem[]> {
     return BudgetItem.save(newItems);
   }
+
+  public async updateBudgetItem(updatedItem: BudgetItem) : Promise<BudgetItem> {
+    return updatedItem.save();
+  }
+
+  public async deleteBudgetItemById(id: string) {
+    return BudgetItem.delete(id);
+  }
   
 }

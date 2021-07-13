@@ -7,6 +7,8 @@ import {
   response,
   requestParam,
   requestBody,
+  httpPut,
+  httpDelete,
 } from "inversify-express-utils";
 import { BudgetItem } from "../models/budget_item";
 import { TYPES } from "../constants/types";
@@ -44,7 +46,7 @@ export class BudgetItemController {
   @httpPost("/", 
   container.get<RequestHandler>(TYPES.BudgetItemValidation)
   )
-  public async post(
+  public async addBudgetItem(
     @response() res: Response,
     @requestBody() newBudgetItem: BudgetItem
   ) {
@@ -55,4 +57,41 @@ export class BudgetItemController {
       res.send(e.message);
     }
   }
+
+  @httpPost("/",
+  container.get<RequestHandler>(TYPES.BudgetItemsValidation))
+  public async addBudgetItems(@response() res: Response,
+  @requestBody() newBudgetItems: BudgetItem[]) : Promise<BudgetItem[]> {
+    try {
+      return await this.BudgetItemService.saveBudgetItems(newBudgetItems);
+    } catch(e) {
+      res.status(500);
+      res.send(e.message);
+    }
+  }
+
+  @httpPut("/",
+  container.get<RequestHandler>(TYPES.BudgetItemValidation))
+  public async updateBudgetItem(@response() res: Response,
+  @requestBody() updatedItem: BudgetItem) : Promise<BudgetItem> {
+    try {
+      return await this.BudgetItemService.updateBudgetItem(updatedItem);
+    } catch(e) {
+      res.status(500);
+      res.send(e.message);
+    }
+  }
+
+  @httpDelete("/:id")
+  public async deleteBudgetItemById(@response() res: Response,@requestParam("id") id: string) {
+    try {
+      return await this.BudgetItemService.deleteBudgetItemById(id);
+    } catch(e) {
+      res.status(500);
+      res.send(e.message);
+    }
+  }
+  
+
+
 }

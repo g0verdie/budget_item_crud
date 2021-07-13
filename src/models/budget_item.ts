@@ -55,7 +55,7 @@ export class BudgetItem extends BaseEntity {
   static addItems(budgetItems: BudgetItem[]) {
     return this.save(budgetItems);
   }
-  static findById(id: string) {
+  static findById(id: string) : Promise<BudgetItem> {
     return this.findById(id);
   }
 
